@@ -13,4 +13,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="copyright">copyright 2016 Staftrack Apps by Patpat Corp.</string>
 </resources>
