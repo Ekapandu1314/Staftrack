@@ -446,7 +446,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if(s_1array[0].equalsIgnoreCase("berhasil")){
                     //Toast.makeText(getApplicationContext(), s_1array[3], Toast.LENGTH_LONG).show();
-                    //Intent intent = new Intent(MainActivity.this, KepalaTanggal.class);
 
 //                    String s_2array[] = s_1array[2].split("'");
 //                    session.createLoginSession(s_1array[1], s_2array[1], s_1array[3]);
@@ -473,7 +472,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
                 else {
                     //Toast.makeText(getApplicationContext(), "Login Failed! Check your internet connection", Toast.LENGTH_LONG).show();
-                    //alert.showAlertDialog(MainActivity.this, "Login failed..", "Check your internet connection", false);
                     //salah = true;
                     return false;
                 }
@@ -481,7 +479,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             else
             {
                 Toast.makeText(getApplicationContext(), "Login Failed! Check your internet connection", Toast.LENGTH_LONG).show();
-                //alert.showAlertDialog(MainActivity.this, "Login failed..", "Check your internet connection", false);
             }
             // TODO: register the new account here.
             return true;

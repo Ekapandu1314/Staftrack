@@ -67,6 +67,8 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ProfilLengkap"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ContactActivity"
             android:label="@string/title_activity_contact"

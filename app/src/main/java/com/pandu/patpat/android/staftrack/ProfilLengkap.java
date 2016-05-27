@@ -1,13 +1,17 @@
 package com.pandu.patpat.android.staftrack;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -25,51 +29,41 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SearchResultActivity extends AppCompatActivity {
+public class ProfilLengkap extends AppCompatActivity {
 
-    String keywords;
-    ProgressBar haha;
-
-    ListView listview;
-    ListSearchAdapter adapter = null;
-    ArrayList<HashMap<String, String>> arraylist;
-
-    public static String NAMA = "nama";
-    public static String NIM = "no";
-    public static String UNIT = "unit";
-    public static String GAMBAR = "foto";
-    public static String AIDI = "id";
-
-    Boolean internet_error = false;
-
+    String id_text;
     ProfilDAO mProfilDAO;
+    ListView listview;
+    ListProfilAdapter adapter = null;
+    ArrayList<HashMap<String, String>> arraylist;
+    Boolean internet_error = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
+        setContentView(R.layout.profil_lengkap);
+
+        Intent a = getIntent();
+        id_text = a.getExtras().getString("id");
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
 
-        Intent i = getIntent();
-        keywords = i.getExtras().getString("keywords");
-        //Toast.makeText(getApplicationContext(), keywords, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "http://patpatstudio.com/staftrek/detail.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&id=" + id_text, Toast.LENGTH_LONG).show();
 
-        haha = (ProgressBar) findViewById(R.id.progress_search);
-        listview = (ListView) findViewById(R.id.listViewSearch);
+        listview = (ListView) findViewById(R.id.listViewProfil);
 
         NetworkUtils utils = new NetworkUtils(getApplicationContext());
+
         if(utils.isConnectingToInternet()) {
 
-                new DownloadJSON().execute();
+            new DownloadJSON().execute();
 
         }
         else {
 
-            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No internet connectionxxx", Toast.LENGTH_SHORT).show();
 
         }
-
     }
 
     private class DownloadJSON extends AsyncTask<Void, Void, Void> {
@@ -94,7 +88,7 @@ public class SearchResultActivity extends AppCompatActivity {
             if(!internet_error) {
 
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/cari.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&keyword=" + keywords);
+                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/detail.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&id=" + id_text);
                 try {
                     HttpResponse httpResponse = httpClient.execute(httpGet);
                     HttpEntity httpEntity = httpResponse.getEntity();
@@ -124,17 +118,21 @@ public class SearchResultActivity extends AppCompatActivity {
                 try {
                     // Locate the array name in JSON
                     JSONObject jsonObject = new JSONObject(serverData);
-                    JSONArray jsonarray = jsonObject.getJSONArray("cari");
+                    JSONArray jsonarray = jsonObject.getJSONArray("detail");
 
                     for (int i = 0; i < jsonarray.length(); i++) {
                         HashMap<String, String> map = new HashMap<String, String>();
                         JSONObject jsonObjectBahan = jsonarray.getJSONObject(i);
                         // Retrive JSON Objects
-                        map.put(AIDI, jsonObjectBahan.getString(AIDI));
-                        map.put(NAMA, jsonObjectBahan.getString(NAMA));
-                        map.put(NIM, jsonObjectBahan.getString(NIM));
-                        map.put(GAMBAR, jsonObjectBahan.getString(GAMBAR));
-                        map.put(UNIT, jsonObjectBahan.getString(UNIT));
+
+                        map.put("id", jsonObjectBahan.getString("id"));
+                        map.put("nama", jsonObjectBahan.getString("nama"));
+                        map.put("foto", jsonObjectBahan.getString("foto"));
+                        map.put("no", jsonObjectBahan.getString("no"));
+                        map.put("hp", jsonObjectBahan.getString("hp"));
+                        map.put("email", jsonObjectBahan.getString("email"));
+                        map.put("alamat", jsonObjectBahan.getString("alamat"));
+                        map.put("unit", jsonObjectBahan.getString("unit"));
                         // Set the JSON Objects into the array
                         arraylist.add(map);
                     }
@@ -159,8 +157,7 @@ public class SearchResultActivity extends AppCompatActivity {
             internet_error = true;
             super.onCancelled();
             //progressDialog.dismiss();
-            haha.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), "Internet connection error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Internet connection error xxx", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -170,21 +167,20 @@ public class SearchResultActivity extends AppCompatActivity {
             if(internet_error) {
 
                 //progressDialog.dismiss();
-                haha.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Internet connection error", Toast.LENGTH_SHORT).show();
 
             }
             else {
 
-                adapter = new ListSearchAdapter(SearchResultActivity.this, arraylist);
+                adapter = new ListProfilAdapter(ProfilLengkap.this, arraylist);
                 // Set the adapter to the ListView
                 listview.setAdapter(adapter);
                 // Close the progress dialog
                 //progressDialog.dismiss();
-                haha.setVisibility(View.GONE);
-
             }
 
         }
     }
+
+
 }
