@@ -492,7 +492,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            //Toast.makeText(getApplicationContext(), nama, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), nama + jbt, Toast.LENGTH_LONG).show();
 
             if (success) {
                 //Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
