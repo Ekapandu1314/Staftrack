@@ -3,6 +3,7 @@ package com.pandu.patpat.android.staftrack;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,7 +29,23 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,14 +60,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    LoginDAO mLoginDAO;
+    Login mLogin;
+    Login mLogin2;
 
+    String jbt;
+    String nama;
+    String salah;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -69,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+
+        mLoginDAO = new LoginDAO(getApplicationContext());
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -92,6 +114,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //mLoginDAO.createLogin(0);
+        mLogin = new Login(1, 0);
+        mLogin2 = new Login();
+        mLoginDAO.addLoginJson(mLogin);
+        //mLogin = mLoginDAO.getBahanById(1);
+        Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getLoginCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void populateAutoComplete() {
@@ -160,22 +189,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+//            mPasswordView.setError(getString(R.string.error_invalid_password));
+//            focusView = mPasswordView;
+//            cancel = true;
+//        }
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
+
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
         }
+//        else if (!isEmailValid(email)) {
+//            mEmailView.setError(getString(R.string.error_invalid_email));
+//            focusView = mEmailView;
+//            cancel = true;
+//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -305,6 +342,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
+        protected void onPreExecute() {
+            Toast.makeText(getApplicationContext(), mEmail + " " + mPassword, Toast.LENGTH_SHORT).show();
+            super.onPreExecute();
+        }
+
+        @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
@@ -315,14 +358,88 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+//            for (String credential : DUMMY_CREDENTIALS) {
+//                String[] pieces = credential.split(":");
+//                if (pieces[0].equals(mEmail)) {
+//                    // Account exists, return true if the password matches.
+//                    return pieces[1].equals(mPassword);
+//                }
+//            }
+
+            InputStream is = null;
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("username", mEmail));
+            nameValuePairs.add(new BasicNameValuePair("password", mPassword));
+            String result = null;
+
+            try{
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpPost httpPost = new HttpPost("http://patpatstudio.com/staftrek/login.php");
+                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpClient.execute(httpPost);
+
+                HttpEntity entity = response.getEntity();
+
+                is = entity.getContent();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
                 }
+                result = sb.toString();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
+            if(result!=null)
+            {
+                String s_1 = result.trim();
+
+                String s_1array[] = s_1.split("%");
+
+                if(s_1array[0].equalsIgnoreCase("berhasil")){
+                    //Toast.makeText(getApplicationContext(), s_1array[3], Toast.LENGTH_LONG).show();
+                    //Intent intent = new Intent(MainActivity.this, KepalaTanggal.class);
+
+//                    String s_2array[] = s_1array[2].split("'");
+//                    session.createLoginSession(s_1array[1], s_2array[1], s_1array[3]);
+//                    //intent.putExtra(USER, sarray[1]);
+//                    Intent k = new Intent(getApplicationContext(), Pilih_Tanggal.class);
+//                    startActivity(k);
+//                    finish();
+                    nama = s_1array[1];
+                    jbt = s_1array[2];
+
+                    return true;
+                }
+                else if (s_1array[0].equalsIgnoreCase("gagal"))
+                {
+                    //Toast.makeText(getApplicationContext(), "Login Failed! Username/Password is incorrect", Toast.LENGTH_LONG).show();
+                    //alert.showAlertDialog(LoginActivity.this, "Login failed..", "Username/Password is incorrect", false);
+                    //salah = true;
+                    return false;
+                }
+                else {
+                    //Toast.makeText(getApplicationContext(), "Login Failed! Check your internet connection", Toast.LENGTH_LONG).show();
+                    //alert.showAlertDialog(MainActivity.this, "Login failed..", "Check your internet connection", false);
+                    //salah = true;
+                    return false;
+                }
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Login Failed! Check your internet connection", Toast.LENGTH_LONG).show();
+                //alert.showAlertDialog(MainActivity.this, "Login failed..", "Check your internet connection", false);
+            }
             // TODO: register the new account here.
             return true;
         }
@@ -332,9 +449,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            Toast.makeText(getApplicationContext(), nama, Toast.LENGTH_LONG).show();
+
             if (success) {
-                finish();
+                Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
             } else {
+                mEmailView.setError(getString(R.string.error_incorrect_password));
+                mEmailView.requestFocus();
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
