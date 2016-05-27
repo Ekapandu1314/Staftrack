@@ -23,17 +23,4 @@
 
     <include layout="@layout/content_map" />
 
-    <com.arlib.floatingsearchview.FloatingSearchView
-        android:id="@+id/floating_search_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:floatingSearch_searchBarMarginLeft="@dimen/activity_horizontal_margin"
-        app:floatingSearch_searchBarMarginTop="@dimen/activity_horizontal_margin"
-        app:floatingSearch_searchBarMarginRight="@dimen/activity_horizontal_margin"
-        app:floatingSearch_searchHint="Search..."
-        app:floatingSearch_showSearchHintWhenNotFocused="true"
-        app:floatingSearch_showSearchKey="false"
-        app:floatingSearch_dismissOnOutsideTouch="true"
-        app:floatingSearch_leftActionMode="showHamburger"/>
-
 </android.support.design.widget.CoordinatorLayout>

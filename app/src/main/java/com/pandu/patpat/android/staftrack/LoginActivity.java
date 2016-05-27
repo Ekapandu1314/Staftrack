@@ -457,6 +457,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     nama = s_1array[0];
                     jbt = s_1array[2];
 
+                    Profil profil = new Profil(Integer.parseInt(nama), "", jbt, "", "", "", "", "", "");
+                    ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
+                    mProfilDAO.addProfilJson(profil);
+
                     return true;
                 }
                 else if (s_1array[0].equalsIgnoreCase("gagal"))
@@ -493,6 +497,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 //Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
                 mLoginDAO.updateLoginFromId(1, 1);
+                Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
 
             } else {
                 if(salah.equalsIgnoreCase("user"))
