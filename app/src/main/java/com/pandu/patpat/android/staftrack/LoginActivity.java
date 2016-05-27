@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                jbt = "Mahasiswa";
+                jbt = "Dosen";
                 jbt =  mPilihJbt.getSelectedItem().toString();
 
             }
@@ -139,13 +139,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        if(mLoginDAO.getLoginCount() == 0)
+        {
+            mLogin = new Login(1, 0);
+            mLoginDAO.addLoginJson(mLogin);
+        }
+        else {
+            //Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getBahanById(1).getLogin()), Toast.LENGTH_SHORT).show();
+            if(mLoginDAO.getBahanById(1).getLogin() == 1)
+            {
+                Intent intent = new Intent(LoginActivity.this, MapActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
 
-        //mLoginDAO.createLogin(0);
-        mLogin = new Login(1, 0);
-        mLogin2 = new Login();
-        mLoginDAO.addLoginJson(mLogin);
+
+
+
+
         //mLogin = mLoginDAO.getBahanById(1);
-        Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getLoginCount()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getLoginCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void populateAutoComplete() {
@@ -479,15 +493,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            Toast.makeText(getApplicationContext(), nama, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), nama, Toast.LENGTH_LONG).show();
 
             if (success) {
-                Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
+                //Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
+                mLoginDAO.updateLoginFromId(1, 1);
 
             } else {
                 if(salah.equalsIgnoreCase("user"))
                 {
-                    mEmailView.setError("This username is incorrect");
+                    mEmailView.setError(getString(R.string.error_incorrect_email));
                     mEmailView.requestFocus();
                 }
 

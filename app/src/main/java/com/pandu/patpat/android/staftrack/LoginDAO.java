@@ -105,15 +105,15 @@ public class LoginDAO {
     public long getLoginCount() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         long cnt  = DatabaseUtils.queryNumEntries(db, DBHelper.TABLE_LOGIN);
-        db.close();
+        //db.close();
         return cnt;
     }
 
     public void updateLoginFromId(int id, int login) {
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.LOGIN, login); //These Fields should be your String values of actual column names
-
         mDatabase.update(DBHelper.TABLE_LOGIN, cv, DBHelper.LOGIN_ID + " = " + id, null);
+
     }
 
     private Login cursorToBahan(Cursor cursor) {
