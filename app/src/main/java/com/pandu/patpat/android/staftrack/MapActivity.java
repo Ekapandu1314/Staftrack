@@ -1,6 +1,8 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,8 +10,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +81,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         } else
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
 
+
+        final ImageView back = (ImageView) findViewById(R.id.left_action);
+        final ImageView cari = (ImageView) findViewById(R.id.cari);
+
+        cari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cari.setVisibility(View.GONE);
+                back.setVisibility(View.VISIBLE);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) v.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                Search.clearFocus();
+
+                back.setVisibility(View.GONE);
+                cari.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 

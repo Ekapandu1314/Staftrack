@@ -16,11 +16,22 @@
 
         <ImageView
             android:alpha="1"
+            android:id="@+id/cari"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
+            android:padding="@dimen/square_button_padding"
+            android:clickable="true"
+            android:background="@drawable/oval_btn_selector"
+            android:src="@drawable/ic_search_black_24dp"/>
+
+        <ImageView
+            android:alpha="1"
             android:id="@+id/left_action"
             android:layout_width="@dimen/square_button_size"
             android:layout_height="@dimen/square_button_size"
             android:padding="@dimen/square_button_padding"
             android:clickable="true"
+            android:visibility="gone"
             android:background="@drawable/oval_btn_selector"
             android:src="@drawable/ic_arrow_back_black_24dp"/>
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Staftrack</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="profil">Profil</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
