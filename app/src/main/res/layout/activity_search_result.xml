@@ -9,4 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pandu.patpat.android.staftrack.SearchResultActivity">
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewSearch"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <ProgressBar
+        android:id="@+id/progress_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="false" />
+
 </RelativeLayout>

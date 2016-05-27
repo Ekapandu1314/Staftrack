@@ -69,6 +69,19 @@ public class ProfilDAO {
 //        return newLogin;
 //    }
 
+    public Profil getTopProfil()
+    {
+        String countQuery = "SELECT  * FROM " + DBHelper.TABLE_PROFIL + " LIMIT 1";
+        Cursor cursor = mDatabase.rawQuery(countQuery, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Profil profil = cursorToProfil(cursor);
+        cursor.close();
+        return profil;
+    }
+
     public void addProfilJson(Profil profil) {
         try{
             ContentValues values = new ContentValues();
@@ -82,9 +95,9 @@ public class ProfilDAO {
             values.put(DBHelper.EMAIL, profil.getEmail());
             values.put(DBHelper.ALAMAT, profil.getAlamat());
 
-            mDatabase.insert(DBHelper.TABLE_LOGIN, null, values);
+            mDatabase.insert(DBHelper.TABLE_PROFIL, null, values);
 
-            mDatabase.update(DBHelper.TABLE_LOGIN, values, DBHelper.LOGIN_ID + " = " + profil.getIdprofil(), null);
+            mDatabase.update(DBHelper.TABLE_PROFIL, values, DBHelper.PROFIL_ID + " = " + profil.getIdprofil(), null);
             //mDatabase.close();
         }catch (Exception e){
             Log.e("problem",e+"");

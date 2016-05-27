@@ -59,7 +59,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         search.putString("keywords", Search.getText().toString());
                         intent.putExtras(search);
                         startActivity(intent);
-                        finish();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Tidak boleh kosong", Toast.LENGTH_SHORT).show();
@@ -74,7 +73,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
 
-        //Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilById(2)), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilCount()), Toast.LENGTH_SHORT).show();
 
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
