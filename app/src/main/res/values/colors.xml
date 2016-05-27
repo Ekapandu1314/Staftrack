@@ -5,5 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="Base">#00BCD4</color>
     <color name="Dark">#00838F</color>
-    <color name="Accent">#76FF03</color>
+    <color name="Accent">#FFC400</color>
+    <color name="Button">#4DD0E1</color>
+    <color name="ButtonPressed">#00BCD4</color>
+    <color name="White">#fff</color>
+    <color name="Black">#000</color>
 </resources>
