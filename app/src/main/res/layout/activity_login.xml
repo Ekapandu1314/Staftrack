@@ -64,6 +64,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <Spinner
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_jabatan"
+                android:layout_gravity="right"
+                android:entries="@array/spinnerpilihjbt"
+                android:spinnerMode="dropdown" />
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"

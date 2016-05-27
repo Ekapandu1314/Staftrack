@@ -24,10 +24,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     String jbt;
     String nama;
     String salah;
+
+    Spinner mPilihJbt;
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -117,6 +121,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mPilihJbt = (Spinner)findViewById(R.id.spinner_jabatan);
+
+        mPilihJbt.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                jbt = "Dosen";
+                jbt =  mPilihJbt.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         //mLoginDAO.createLogin(0);
         mLogin = new Login(1, 0);
@@ -225,7 +246,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, jbt);
             mAuthTask.execute((Void) null);
         }
     }
@@ -339,10 +360,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final String mJabatan;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, String jabatan) {
             mEmail = email;
             mPassword = password;
+            mJabatan = jabatan;
         }
 
         @Override
@@ -374,6 +397,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             nameValuePairs.add(new BasicNameValuePair("username", mEmail));
             nameValuePairs.add(new BasicNameValuePair("password", mPassword));
+            nameValuePairs.add(new BasicNameValuePair("jabatan", mJabatan));
             String result = null;
 
             try{
@@ -430,6 +454,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     //Toast.makeText(getApplicationContext(), "Login Failed! Username/Password is incorrect", Toast.LENGTH_LONG).show();
                     //alert.showAlertDialog(LoginActivity.this, "Login failed..", "Username/Password is incorrect", false);
                     //salah = true;
+                    salah = s_1array[1];
                     return false;
                 }
                 else {
@@ -457,11 +482,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Toast.makeText(getBaseContext(), nama + " " + jbt, Toast.LENGTH_SHORT ).show();
+
             } else {
-                mEmailView.setError(getString(R.string.error_incorrect_password));
-                mEmailView.requestFocus();
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                if(salah.equalsIgnoreCase("user"))
+                {
+                    mEmailView.setError(getString(R.string.error_incorrect_password));
+                    mEmailView.requestFocus();
+                }
+
+                if(salah.equalsIgnoreCase("pass"))
+                {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
             }
         }
 

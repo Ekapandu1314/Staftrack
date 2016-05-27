@@ -15,4 +15,11 @@
     </string>
 
     <string name="copyright">copyright 2016 Staftrack Apps by Patpat Corp.</string>
+
+    <string-array name="spinnerpilihjbt">
+        <item>Dosen</item>
+        <item>Pegawai</item>
+        <item>Mahasiswa</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>
