@@ -2,6 +2,7 @@ package com.pandu.patpat.android.staftrack;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +14,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -22,8 +25,11 @@ import android.support.v7.widget.PopupMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +55,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -62,6 +69,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Location mLastLocation;
 
     ProfilDAO mProfilDAO;
+    LoginDAO mLoginDAO;
 
     EditText Search;
 
@@ -77,6 +85,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mapFragment.getMapAsync(this);
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
+        mLoginDAO = new LoginDAO(getApplicationContext());
 
         Search = (EditText)findViewById(R.id.search_bar_text);
         final ImageView back = (ImageView) findViewById(R.id.left_action);
@@ -120,7 +129,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         buildGoogleApiClient();
 
-        ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
+        final ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
 
         Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilCount()), Toast.LENGTH_SHORT).show();
 
@@ -172,7 +181,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                                 break;
 
                             case R.id.logout:
-                                Toast.makeText( MapActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText( MapActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MapActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                mLoginDAO.updateLoginFromId(1, 0);
+                                Profil profil = mProfilDAO.getTopProfil();
+                                mProfilDAO.deleteProfil(profil);
+                                finish();
                                 break;
 
                             case R.id.about:
@@ -195,6 +210,66 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
         Toast.makeText(this, "Failed to connect...", Toast.LENGTH_SHORT).show();
+
+    }
+
+    private void saveLokasi(final String jabatan, final String id, final String lat, final String lon) {
+
+        class LoginAsync extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String versi = params[0];
+                String tgl = params[1];
+
+                InputStream is = null;
+                String result = null;
+
+                    try {
+                        HttpClient httpClient = new DefaultHttpClient();
+                        HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/simpanlokasi.php?jabatan=" + jabatan + "&id=" + id+ "&la=" + lat + "&lon=" + lon);
+
+                        HttpResponse response = httpClient.execute(httpGet);
+
+                        //response = httpClient.execute("patpatstudio.com", "/pakanku/update.php?versi=" + versi + "&tanggal=" + tgl);
+                        HttpEntity entity = response.getEntity();
+                        String htmlResponse = EntityUtils.toString(entity);
+                        result = htmlResponse;
+                    } catch (ClientProtocolException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                return result;
+
+
+            }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+
+                //loadingDialog.dismiss();
+            }
+
+            @Override
+            protected void onPostExecute(String result){
+
+            }
+        }
+
+        LoginAsync la = new LoginAsync();
+        la.execute(jabatan, id, lat, lon);
 
     }
 
@@ -224,6 +299,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             CameraUpdate zoom=CameraUpdateFactory.zoomTo(16);
             mMap.moveCamera(center);
             mMap.animateCamera(zoom);
+
+            saveLokasi(mProfilDAO.getTopProfil().getJabatan_profil(), String.valueOf(mProfilDAO.getTopProfil().getIdprofil()), String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()));
 
 //            t = new Timer();
 //            t.schedule(new TimerTask() {

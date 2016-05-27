@@ -1,16 +1,12 @@
 package com.pandu.patpat.android.staftrack;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,18 +19,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,9 +26,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Eka Pandu Winata on 5/27/2016.
+ * Created by Eka Pandu Winata on 5/28/2016.
  */
-public class ListSearchAdapter extends BaseAdapter {
+public class ListProfilAdapter extends BaseAdapter {
 
     // Declare Variables
 
@@ -59,8 +43,8 @@ public class ListSearchAdapter extends BaseAdapter {
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ListSearchAdapter(Context context,
-                           ArrayList<HashMap<String, String>> arraylist) {
+    public ListProfilAdapter(Context context,
+                             ArrayList<HashMap<String, String>> arraylist) {
         this.context = context;
         data = arraylist;
         options = new DisplayImageOptions.Builder()
@@ -90,52 +74,36 @@ public class ListSearchAdapter extends BaseAdapter {
 
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Declare Variables
-        TextView nama;
-        TextView nim;
-        TextView unit;
-        TextView aidi;
-        ImageView flag;
-        Button profil;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.list_item_search, parent, false);
+        View itemView = inflater.inflate(R.layout.dialog_profil, parent, false);
         // Get the position
         resultp = data.get(position);
 
 
-        nama = (TextView) itemView.findViewById(R.id.nama_search);
-        nim = (TextView) itemView.findViewById(R.id.country);
-        unit = (TextView) itemView.findViewById(R.id.unit_search);
-        aidi = (TextView) itemView.findViewById(R.id.aidi);
-        profil = (Button) itemView.findViewById(R.id.profilSearch);
-
-
-        flag = (ImageView) itemView.findViewById(R.id.flag);
+        TextView id = (TextView) itemView.findViewById(R.id.aidi_dialog);
+        TextView name = (TextView) itemView.findViewById(R.id.name_dialog);
+        TextView jabatan = (TextView) itemView.findViewById(R.id.jabatan);
+        TextView nmr_induk = (TextView) itemView.findViewById(R.id.nmr_induk);
+        TextView unitt = (TextView) itemView.findViewById(R.id.unit_dialog);
+        TextView nmr_telp = (TextView) itemView.findViewById(R.id.nmr_telp);
+        TextView imel = (TextView) itemView.findViewById(R.id.imel);
+        TextView alamatt = (TextView) itemView.findViewById(R.id.alamat_dialog);
+        ImageView gambar = (ImageView) itemView.findViewById(R.id.foto_profil);
 
         // Capture position and set results to the TextViews
-        nama.setText(resultp.get(SearchResultActivity.NAMA));
-        nim.setText("No = " + resultp.get(SearchResultActivity.NIM));
-        unit.setText(resultp.get(SearchResultActivity.UNIT));
-        aidi.setText(resultp.get(SearchResultActivity.AIDI));
+        id.setText(resultp.get("id"));
+        name.setText(resultp.get("nama"));
+        nmr_induk.setText(resultp.get("no"));
+        unitt.setText(resultp.get("unit"));
+        nmr_telp.setText(resultp.get("hp"));
+        imel.setText(resultp.get("email"));
+        alamatt.setText(resultp.get("alamat"));
         // Capture position and set results to the ImageView
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(resultp.get(SearchResultActivity.GAMBAR), flag, options, animateFirstListener);
-
-        profil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, ProfilLengkap.class);
-                Bundle search = new Bundle();
-                search.putString("id", resultp.get(SearchResultActivity.AIDI));
-                intent.putExtras(search);
-                context.startActivity(intent);
-
-            }
-
-        });
+        imageLoader.displayImage(resultp.get("foto"), gambar, options, animateFirstListener);
 
         // Capture ListView item click
 //        itemView.setOnClickListener(new View.OnClickListener() {
