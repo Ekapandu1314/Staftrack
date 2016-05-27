@@ -454,7 +454,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    Intent k = new Intent(getApplicationContext(), Pilih_Tanggal.class);
 //                    startActivity(k);
 //                    finish();
-                    nama = s_1array[0];
+                    nama = s_1array[1];
                     jbt = s_1array[2];
 
                     Profil profil = new Profil(Integer.parseInt(nama), "", jbt, "", "", "", "", "", "");
