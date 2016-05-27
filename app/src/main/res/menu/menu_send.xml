@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MyApplication="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/Email"
+        android:title="@string/send_email"
+        MyApplication:showAsAction="never"/>
+
+    <item android:id="@+id/sms"
+        android:title="@string/send_sms"
+        MyApplication:showAsAction="never" />
+
+    <!--<item android:id="@+id/about"-->
+        <!--android:title="@string/action_about"-->
+        <!--MyApplication:showAsAction="never" />-->
+</menu>
