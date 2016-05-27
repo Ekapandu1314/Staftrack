@@ -31,7 +31,7 @@ import java.util.HashMap;
 
 public class ProfilLengkap extends AppCompatActivity {
 
-    String id_text;
+    String nama_text;
     ProfilDAO mProfilDAO;
     ListView listview;
     ListProfilAdapter adapter = null;
@@ -44,7 +44,25 @@ public class ProfilLengkap extends AppCompatActivity {
         setContentView(R.layout.profil_lengkap);
 
         Intent a = getIntent();
-        id_text = a.getExtras().getString("id");
+        nama_text = a.getExtras().getString("nama");
+
+        String namaArray[] = nama_text.split(" ");
+
+        if(namaArray.length > 1) {
+
+            nama_text = "";
+
+            for (int i = 0 ; i < namaArray.length - 1 ; i++) {
+
+                nama_text += namaArray[i] + "%20";
+
+            }
+
+            nama_text += namaArray[namaArray.length - 1];
+
+        }
+
+        Toast.makeText(getApplicationContext(), nama_text, Toast.LENGTH_SHORT).show();
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
 
@@ -88,7 +106,7 @@ public class ProfilLengkap extends AppCompatActivity {
             if(!internet_error) {
 
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/detail.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&id=" + id_text);
+                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/detail.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&id=" + nama_text );
                 try {
                     HttpResponse httpResponse = httpClient.execute(httpGet);
                     HttpEntity httpEntity = httpResponse.getEntity();

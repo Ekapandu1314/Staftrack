@@ -1,5 +1,6 @@
 package com.pandu.patpat.android.staftrack;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,8 @@ public class SearchResultActivity extends AppCompatActivity {
 
     Boolean internet_error = false;
 
+    public static Activity searchresult;
+
     ProfilDAO mProfilDAO;
 
     @Override
@@ -50,6 +53,8 @@ public class SearchResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_result);
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
+
+        searchresult = this;
 
         Intent i = getIntent();
         keywords = i.getExtras().getString("keywords");
@@ -134,6 +139,8 @@ public class SearchResultActivity extends AppCompatActivity {
                         map.put(NAMA, jsonObjectBahan.getString(NAMA));
                         map.put(NIM, jsonObjectBahan.getString(NIM));
                         map.put(GAMBAR, jsonObjectBahan.getString(GAMBAR));
+                        map.put("la", jsonObjectBahan.getString("la"));
+                        map.put("lo", jsonObjectBahan.getString("lo"));
                         map.put(UNIT, jsonObjectBahan.getString(UNIT));
                         // Set the JSON Objects into the array
                         arraylist.add(map);

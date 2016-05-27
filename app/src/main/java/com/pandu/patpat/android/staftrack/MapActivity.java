@@ -1,6 +1,7 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -16,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -74,6 +76,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     EditText Search;
 
+    public static Activity mapActivity;
+
     Timer t;
 
     @Override
@@ -84,6 +88,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mapActivity = this;
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
         mLoginDAO = new LoginDAO(getApplicationContext());
@@ -165,16 +171,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if(marker.getTitle().equals("My Location"))
-                {
 
-                }
-                return false;
-            }
-        });
 
         seting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,6 +311,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             saveLokasi(mProfilDAO.getTopProfil().getJabatan_profil(), String.valueOf(mProfilDAO.getTopProfil().getIdprofil()), String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()));
 
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if(marker.getTitle().equals("My Location"))
+                    {
+                        Intent intent = new Intent(MapActivity.this, ContactActivity.class);
+                        //Bundle search = new Bundle();
+                        //search.putString("keywords", Search.getText().toString());
+                        //intent.putExtras(search);
+                        startActivity(intent);
+                    }
+                    return false;
+                }
+            });
+
 //            t = new Timer();
 //            t.schedule(new TimerTask() {
 //
@@ -371,10 +383,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     }
 
+    public void setMarker(String nama, double lat, double longi) {
+
+    }
+
     @Override
     public void onConnectionSuspended(int arg0) {
         Toast.makeText(this, "Connection suspended...", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+
+                String stredittext=data.getStringExtra("edittextvalue");
+            }
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {

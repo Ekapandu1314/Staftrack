@@ -94,6 +94,8 @@ public class ListSearchAdapter extends BaseAdapter {
         TextView nim;
         TextView unit;
         TextView aidi;
+        TextView lat;
+        TextView lon;
         ImageView flag;
         Button profil;
 
@@ -109,6 +111,8 @@ public class ListSearchAdapter extends BaseAdapter {
         nim = (TextView) itemView.findViewById(R.id.country);
         unit = (TextView) itemView.findViewById(R.id.unit_search);
         aidi = (TextView) itemView.findViewById(R.id.aidi);
+        lat = (TextView) itemView.findViewById(R.id.latSearch);
+        lon = (TextView) itemView.findViewById(R.id.lonSearch);
         profil = (Button) itemView.findViewById(R.id.profilSearch);
 
 
@@ -119,6 +123,8 @@ public class ListSearchAdapter extends BaseAdapter {
         nim.setText("No = " + resultp.get(SearchResultActivity.NIM));
         unit.setText(resultp.get(SearchResultActivity.UNIT));
         aidi.setText(resultp.get(SearchResultActivity.AIDI));
+        lat.setText(resultp.get("la"));
+        lon.setText(resultp.get("lo"));
         // Capture position and set results to the ImageView
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         imageLoader.displayImage(resultp.get(SearchResultActivity.GAMBAR), flag, options, animateFirstListener);
@@ -129,12 +135,21 @@ public class ListSearchAdapter extends BaseAdapter {
 
                 Intent intent = new Intent(context, ProfilLengkap.class);
                 Bundle search = new Bundle();
-                search.putString("id", resultp.get(SearchResultActivity.AIDI));
+                search.putString("nama", resultp.get(SearchResultActivity.NAMA));
                 intent.putExtras(search);
                 context.startActivity(intent);
 
             }
 
+        });
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchResultActivity.searchresult.finish();
+                MapActivity mapActivity = new MapActivity();
+                mapActivity.setMarker(resultp.get(SearchResultActivity.NAMA), Double.parseDouble(resultp.get("la")), Double.parseDouble(resultp.get("lo")));
+            }
         });
 
         // Capture ListView item click

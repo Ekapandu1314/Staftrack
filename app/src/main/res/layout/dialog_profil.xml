@@ -23,7 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
-        android:id="@+id/relativeLayout">
+>
         <TextView
             android:id="@+id/aidi_dialog"
             android:layout_width="wrap_content"

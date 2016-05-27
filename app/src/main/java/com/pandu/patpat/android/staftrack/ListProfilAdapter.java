@@ -78,20 +78,20 @@ public class ListProfilAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.dialog_profil, parent, false);
+        View itemView = inflater.inflate(R.layout.dialog_contact, parent, false);
         // Get the position
         resultp = data.get(position);
 
 
-        TextView id = (TextView) itemView.findViewById(R.id.aidi_dialog);
-        TextView name = (TextView) itemView.findViewById(R.id.name_dialog);
-        TextView jabatan = (TextView) itemView.findViewById(R.id.jabatan);
-        TextView nmr_induk = (TextView) itemView.findViewById(R.id.nmr_induk);
-        TextView unitt = (TextView) itemView.findViewById(R.id.unit_dialog);
-        TextView nmr_telp = (TextView) itemView.findViewById(R.id.nmr_telp);
-        TextView imel = (TextView) itemView.findViewById(R.id.imel);
-        TextView alamatt = (TextView) itemView.findViewById(R.id.alamat_dialog);
-        ImageView gambar = (ImageView) itemView.findViewById(R.id.foto_profil);
+        TextView id = (TextView) itemView.findViewById(R.id.aidi_profil_profil);
+        TextView name = (TextView) itemView.findViewById(R.id.name_profil_profil);
+        TextView jabatan = (TextView) itemView.findViewById(R.id.jabatan_profil_profil);
+        TextView nmr_induk = (TextView) itemView.findViewById(R.id.nmr_induk_profil_profil);
+        TextView unitt = (TextView) itemView.findViewById(R.id.unit_profil_profil);
+        TextView nmr_telp = (TextView) itemView.findViewById(R.id.nmr_telp_profil_profil);
+        TextView imel = (TextView) itemView.findViewById(R.id.imel_profil_profil);
+        TextView alamatt = (TextView) itemView.findViewById(R.id.alamat_profil_profil);
+        ImageView gambar = (ImageView) itemView.findViewById(R.id.foto_profil_profil);
 
         // Capture position and set results to the TextViews
         id.setText(resultp.get("id"));
