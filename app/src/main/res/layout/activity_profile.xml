@@ -33,6 +33,21 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Track aktif  "
+            android:id="@+id/switch1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+        <ListView
+            android:id="@+id/listfiuh"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/switch1"
+            android:scrollbars="none"/>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

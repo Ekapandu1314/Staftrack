@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/lay"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/foto_profil"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/profil"
-        android:layout_alignBottom="@+id/relativeLayout"
-        android:layout_alignTop="@+id/relativeLayout" />
+        android:layout_alignBottom="@+id/layot"
+        android:layout_alignTop="@+id/layot" />
 
     <RelativeLayout
         android:id="@+id/layot"
@@ -22,8 +27,7 @@
         android:layout_toEndOf="@+id/foto_profil"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        android:id="@+id/relativeLayout">
+        android:orientation="vertical">
         <TextView
             android:id="@+id/aidi_dialog"
             android:layout_width="wrap_content"
@@ -80,20 +84,61 @@
             android:layout_height="wrap_content"
             android:text="Alamat"/>
     </RelativeLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/appointment"
         android:text="Buat Janji"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:layout_width="match_parent"
+        android:onClick="expandableButton1"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay"/>
+
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        android:id="@+id/expandableLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layot"/>
+        android:layout_below="@+id/appointment"
+        android:padding="16dp"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:clickable="true"
+        app:ael_duration="400"
+        app:ael_expanded="false"
+        app:ael_interpolator="bounce"
+        app:ael_orientation="vertical">
+
+        <EditText
+            android:id="@+id/keperluan"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:minLines="3"
+            android:hint="tuliskan keperluan anda"
+            android:gravity="top|left"
+            android:maxLines="10"
+            android:layout_toLeftOf="@+id/send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/send_btn"
+            android:layout_width="@dimen/square_button_size"
+            android:layout_height="@dimen/square_button_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/keperluan"
+            android:src="@drawable/ic_kirim"
+            android:clickable="true"
+            android:background="@drawable/rect_btn_selector"/>
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     <Button
         android:id="@+id/hubungi"
         android:text="Hubungi"
+        android:drawableRight="@android:drawable/arrow_down_float"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/appointment"/>
+        android:layout_below="@+id/expandableLayout1"/>
 
 
 </RelativeLayout>
