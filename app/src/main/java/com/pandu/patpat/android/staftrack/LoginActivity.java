@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     String jbt;
     String nama;
-    String salah;
+    String salah = " ";
 
     Spinner mPilihJbt;
     /**
@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onClick(View view) {
                     attemptLogin();
+                    //Toast.makeText(getBaseContext(), mEmailView.getText().toString() + mPasswordView.getText().toString()  + jbt , Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                jbt = "Dosen";
+                jbt = "Mahasiswa";
                 jbt =  mPilihJbt.getSelectedItem().toString();
 
             }
@@ -370,7 +371,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(), mEmail + " " + mPassword, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), mEmail + " " + mPassword + " " + mJabatan, Toast.LENGTH_SHORT).show();
             super.onPreExecute();
         }
 
@@ -444,7 +445,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    Intent k = new Intent(getApplicationContext(), Pilih_Tanggal.class);
 //                    startActivity(k);
 //                    finish();
-                    nama = s_1array[1];
+                    nama = s_1array[0];
                     jbt = s_1array[2];
 
                     return true;
@@ -486,7 +487,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             } else {
                 if(salah.equalsIgnoreCase("user"))
                 {
-                    mEmailView.setError(getString(R.string.error_incorrect_password));
+                    mEmailView.setError("This username is incorrect");
                     mEmailView.requestFocus();
                 }
 
