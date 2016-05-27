@@ -1,11 +1,16 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -25,6 +30,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
 
+    EditText Search;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +41,35 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Search = (EditText)findViewById(R.id.search_bar_text);
+
+        Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    if(Search.getText().toString().trim().length() > 0)
+                    {
+                        Intent intent = new Intent(MapActivity.this, SearchResultActivity.class);
+                        Bundle search = new Bundle();
+                        search.putString("keywords", Search.getText().toString());
+                        intent.putExtras(search);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         buildGoogleApiClient();
 
         ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
 
-        Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilById(2)), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilById(2)), Toast.LENGTH_SHORT).show();
 
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
