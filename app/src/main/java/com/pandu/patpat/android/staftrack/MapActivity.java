@@ -5,6 +5,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -16,9 +18,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.support.v7.widget.PopupMenu;
 import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +79,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mProfilDAO = new ProfilDAO(getApplicationContext());
 
         Search = (EditText)findViewById(R.id.search_bar_text);
+        final ImageView back = (ImageView) findViewById(R.id.left_action);
+        final ImageView cari = (ImageView) findViewById(R.id.cari);
+        final ImageView track = (ImageView) findViewById(R.id.track_btn);
+        final ImageView seting = (ImageView) findViewById(R.id.setting_btn);
+
+        Search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    cari.setVisibility(View.GONE);
+                    back.setVisibility(View.VISIBLE);
+                } else {
+                    cari.setVisibility(View.VISIBLE);
+                    back.setVisibility(View.GONE);
+                }
+            }
+        });
 
         Search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -105,6 +129,64 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         } else
             Toast.makeText(this, "Not connected...", Toast.LENGTH_SHORT).show();
 
+        cari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cari.setVisibility(View.GONE);
+                back.setVisibility(View.VISIBLE);
+
+                Search.requestFocus();
+                InputMethodManager imm = (InputMethodManager) v.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(Search, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) v.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                Search.clearFocus();
+
+                back.setVisibility(View.GONE);
+                cari.setVisibility(View.VISIBLE);
+            }
+        });
+
+        seting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(MapActivity.this, seting);
+                popup.getMenuInflater().inflate(R.menu.menu_options, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId())
+                        {
+                            case R.id.profile:
+                                Intent intent1 = new Intent(MapActivity.this, ProfileActivity.class);
+                                startActivity(intent1);
+                                break;
+
+                            case R.id.logout:
+                                Toast.makeText( MapActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case R.id.about:
+                                Intent intent2 = new Intent(MapActivity.this, AboutActivity.class);
+                                startActivity(intent2);
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        });
 
 
 
