@@ -133,9 +133,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(
-                                MapActivity.this,
-                                "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+
+                        switch (item.getItemId())
+                        {
+                            case R.id.profile:
+                                Intent intent1 = new Intent(MapActivity.this, ProfileActivity.class);
+                                startActivity(intent1);
+                                break;
+
+                            case R.id.logout:
+                                Toast.makeText( MapActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case R.id.about:
+                                Intent intent2 = new Intent(MapActivity.this, AboutActivity.class);
+                                startActivity(intent2);
+                                break;
+                        }
                         return true;
                     }
                 });
