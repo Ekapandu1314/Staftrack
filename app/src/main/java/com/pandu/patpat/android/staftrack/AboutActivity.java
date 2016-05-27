@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -18,6 +20,13 @@ public class AboutActivity extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        ListView list = (ListView) findViewById(R.id.list);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.list_profil, android.R.layout.simple_list_item_1);
+
+        if(list != null)
+            list.setAdapter(adapter);
     }
 
     @Override

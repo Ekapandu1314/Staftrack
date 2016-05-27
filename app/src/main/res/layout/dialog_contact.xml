@@ -8,19 +8,20 @@
         android:id="@+id/foto_profil"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/profil"/>
+        android:contentDescription="@string/profil"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignParentStart="true" />
 
     <RelativeLayout
-        android:id="@+id/layot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@+id/foto_profil"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:id="@+id/relativeLayout">
         <TextView
             android:id="@+id/aidi"
             android:layout_width="wrap_content"
@@ -77,20 +78,6 @@
             android:layout_height="wrap_content"
             android:text="Alamat"/>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/appointment"
-        android:text="Buat Janji"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layot"/>
-
-    <Button
-        android:id="@+id/hubungi"
-        android:text="Hubungi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appointment"/>
 
 
 </RelativeLayout>
