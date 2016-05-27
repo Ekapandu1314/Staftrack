@@ -67,7 +67,17 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfilLengkap"></activity>
+        <activity android:name=".ProfilLengkap"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ContactActivity"
+            android:label="@string/title_activity_contact"
+            android:parentActivityName=".MapActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pandu.patpat.android.staftrack.MapActivity" />
+        </activity>
     </application>
 
 </manifest>

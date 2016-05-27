@@ -9,30 +9,28 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/profil"
-        android:layout_alignBottom="@+id/relativeLayout"
-        android:layout_alignTop="@+id/relativeLayout" />
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignParentStart="true" />
 
     <RelativeLayout
-        android:id="@+id/layot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@+id/foto_profil"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
         android:id="@+id/relativeLayout">
         <TextView
-            android:id="@+id/aidi_dialog"
+            android:id="@+id/aidi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID"
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/name_dialog"
+            android:id="@+id/name"
             android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +38,7 @@
 
         <TextView
             android:id="@+id/jabatan"
-            android:layout_below="@+id/name_dialog"
+            android:layout_below="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jabatan"/>
@@ -53,7 +51,7 @@
             android:text="NIP"/>
 
         <TextView
-            android:id="@+id/unit_dialog"
+            android:id="@+id/unit"
             android:layout_below="@id/nmr_induk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +59,7 @@
 
         <TextView
             android:id="@+id/nmr_telp"
-            android:layout_below="@id/unit_dialog"
+            android:layout_below="@id/unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No. HP"/>
@@ -74,26 +72,12 @@
             android:text="E-mail"/>
 
         <TextView
-            android:id="@+id/alamat_dialog"
+            android:id="@+id/alamat"
             android:layout_below="@id/imel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alamat"/>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/appointment"
-        android:text="Buat Janji"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layot"/>
-
-    <Button
-        android:id="@+id/hubungi"
-        android:text="Hubungi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appointment"/>
 
 
 </RelativeLayout>

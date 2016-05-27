@@ -3,6 +3,7 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_maps">Map</string>
     <string name="profil">Profil</string>
 
     <!-- String related to menu -->
@@ -32,5 +33,11 @@
         <item>Pegawai</item>
         <item>Mahasiswa</item>
     </string-array>
-    <string name="title_activity_maps">Map</string>
+
+    <string-array name="list_profil">
+        <item>About</item>
+        <item>Terms and Policy</item>
+        <item>Contact us</item>
+    </string-array>
+    <string name="title_activity_contact">ContactActivity</string>
 </resources>
