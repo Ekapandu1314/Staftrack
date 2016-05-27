@@ -154,10 +154,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
 
-
-
-
-
         //mLogin = mLoginDAO.getBahanById(1);
         //Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getLoginCount()), Toast.LENGTH_SHORT).show();
     }
