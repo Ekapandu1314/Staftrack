@@ -60,25 +60,29 @@
     </FrameLayout>
 
     <ImageView
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_toLeftOf="@+id/setting_btn"
+        android:layout_toStartOf="@+id/setting_btn"
         android:alpha="1"
-        android:id="@+id/clear_btn"
+        android:id="@+id/track_btn"
         android:layout_width="@dimen/square_button_size"
         android:layout_height="@dimen/square_button_size"
         android:padding="@dimen/square_button_padding"
         android:clickable="true"
         android:layout_centerInParent="true"
+        android:src="@drawable/ic_track"
         android:background="@drawable/oval_btn_selector"/>
 
-    <com.arlib.floatingsearchview.util.view.MenuView
+    <ImageView
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/menu_view"
+        android:id="@+id/setting_btn"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="@dimen/square_button_size"
+        android:padding="@dimen/square_button_padding"
+        android:clickable="true"
         android:layout_centerInParent="true"
+        android:src="@drawable/ic_more_vert_black_24dp"
+        android:background="@drawable/oval_btn_selector"
         android:layout_marginRight="@dimen/search_bar_right_icon_right_margin"/>
 
 </RelativeLayout>
