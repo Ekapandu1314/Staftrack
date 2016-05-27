@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     LoginDAO mLoginDAO;
     Login mLogin;
-    Login mLogin2;
 
     String jbt;
     String nama;
@@ -153,11 +152,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 finish();
             }
         }
-
-
-
-
-
         //mLogin = mLoginDAO.getBahanById(1);
         //Toast.makeText(getBaseContext(), String.valueOf(mLoginDAO.getLoginCount()), Toast.LENGTH_SHORT).show();
     }
@@ -460,7 +454,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //                    startActivity(k);
 //                    finish();
                     nama = s_1array[0];
-                    jbt = s_1array[2];
+                    Profil mProfil = new Profil(Integer.parseInt(nama), "", jbt, "", "", "", "", "", "");
+                    ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
+                    mProfilDAO.addProfilJson(mProfil);
+                    //jbt = s_1array[2];
 
                     return true;
                 }

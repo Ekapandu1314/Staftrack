@@ -14,24 +14,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Table Name
     public static final String TABLE_LOGIN = "TABLE_LOGIN";
+    public static final String TABLE_PROFIL = "TABLE_PROFIL";
     //public static final String TABLE_VERSION = "TABLE_VERSION";
     //public static final String TABLE_HEWAN = "TABLE_HEWAN";
     //public static final String TABLE_RECORD = "TABLE_RECORD";
 
-    // columns of the bahan harga table
     public static final String LOGIN_ID = "idlogin";
     public static final String LOGIN = "login";
 
-    // columns of the hewan table
-    public static final String HEWAN_ID = "idhewan";
-    public static final String HEWAN = "hewan";
-    public static final String TUJUAN = "tujuan";
-    public static final String HIJAU = "hijau";
-    public static final String KONSENTRAT = "konsentrat";
-    public static final String BK_HEWAN = "bk_hewan";
-    public static final String PK_HEWAN = "pk_hewan";
-    //public static final String ADG = "adg";
-    public static final String HARGA_JUAL = "harga_jual";
+    public static final String PROFIL_ID = "idprofil";
+    public static final String NAMA_PROFIL = "nama_profil";
+    public static final String JABATAN_PROFIL = "jabatan_profil";
+    public static final String FOTO = "foto";
+    public static final String NIP = "nip";
+    public static final String UNIT = "unit";
+    public static final String NO_HP = "no_hp";
+    public static final String EMAIL = "email";
+    public static final String ALAMAT = "alamat";
 
     // columns of the version table
     public static final String TANGGAL = "tanggal";
@@ -52,11 +51,11 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "pakanku.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String CREATE_TABLE_BAHAN = "create table " + TABLE_LOGIN + "(" + LOGIN_ID
+    private static final String CREATE_TABLE_LOGIN = "create table " + TABLE_LOGIN + "(" + LOGIN_ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOGIN + " INTEGER NOT NULL );";
 
-//    private static final String CREATE_TABLE_VERSION = "create table " + TABLE_VERSION + "(" + VERSION
-//            + " TEXT PRIMARY KEY NOT NULL, " + TANGGAL + " TEXT NOT NULL);";
+    private static final String CREATE_TABLE_PROFIL = "create table " + TABLE_PROFIL + "(" + PROFIL_ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NAMA_PROFIL + " TEXT NOT NULL, " + JABATAN_PROFIL + " TEXT NOT NULL, " + FOTO + " TEXT NOT NULL, " + NIP + " TEXT NOT NULL, " + UNIT + " TEXT NOT NULL, " + NO_HP + " TEXT NOT NULL, " + EMAIL + " TEXT NOT NULL, " + ALAMAT + " TEXT NOT NULL);";
 
 //    private static final String CREATE_TABLE_HEWAN = "create table " + TABLE_HEWAN + "(" + HEWAN_ID
 //            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + HEWAN + " TEXT NOT NULL, "+ TUJUAN + " TEXT NOT NULL, " + HIJAU + " DOUBLE NOT NULL," + KONSENTRAT + " DOUBLE NOT NULL, " + BK_HEWAN + " DOUBLE NOT NULL, " + PK_HEWAN + " DOUBLE NOT NULL, " + HARGA_JUAL + " INTEGER);";
@@ -70,10 +69,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(CREATE_TABLE_BAHAN);
-        //database.execSQL(CREATE_TABLE_VERSION);
-        //database.execSQL(CREATE_TABLE_HEWAN);
-        //database.execSQL(CREATE_TABLE_RECORD);
+        database.execSQL(CREATE_TABLE_LOGIN);
+        database.execSQL(CREATE_TABLE_PROFIL);
+
     }
 
     @Override
@@ -81,9 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.w(TAG, "Upgrading the database from version " + oldVersion + " to " + newVersion);
         // clear all data
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSION);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_HEWAN);
-        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECORD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFIL);
 
         // recreate the tables
         onCreate(db);
