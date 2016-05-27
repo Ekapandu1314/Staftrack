@@ -64,7 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     LoginDAO mLoginDAO;
     Login mLogin;
-    Login mLogin2;
 
     String jbt;
     String nama;
