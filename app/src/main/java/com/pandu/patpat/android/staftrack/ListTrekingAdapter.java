@@ -1,17 +1,13 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,18 +20,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,9 +27,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Eka Pandu Winata on 5/27/2016.
+ * Created by Eka Pandu Winata on 5/28/2016.
  */
-public class ListSearchAdapter extends BaseAdapter {
+public class ListTrekingAdapter extends BaseAdapter {
 
     // Declare Variables
 
@@ -60,8 +44,8 @@ public class ListSearchAdapter extends BaseAdapter {
     private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ListSearchAdapter(Context context,
-                           ArrayList<HashMap<String, String>> arraylist) {
+    public ListTrekingAdapter(Context context,
+                             ArrayList<HashMap<String, String>> arraylist) {
         this.context = context;
         data = arraylist;
         options = new DisplayImageOptions.Builder()
@@ -95,10 +79,9 @@ public class ListSearchAdapter extends BaseAdapter {
         TextView nim;
         TextView unit;
         TextView aidi;
-        TextView lat;
-        TextView lon;
+        TextView status;
         ImageView flag;
-        Button profil;
+        Button haha;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -107,55 +90,46 @@ public class ListSearchAdapter extends BaseAdapter {
         // Get the position
         resultp = data.get(position);
 
-
         nama = (TextView) itemView.findViewById(R.id.nama_search);
-        nim = (TextView) itemView.findViewById(R.id.country);
+        nim = (TextView) itemView.findViewById(R.id.latSearch);
         unit = (TextView) itemView.findViewById(R.id.unit_search);
         aidi = (TextView) itemView.findViewById(R.id.aidi);
-        lat = (TextView) itemView.findViewById(R.id.latSearch);
-        lon = (TextView) itemView.findViewById(R.id.lonSearch);
-        profil = (Button) itemView.findViewById(R.id.profilSearch);
+        status = (TextView) itemView.findViewById(R.id.country);
+        haha = (Button) itemView.findViewById(R.id.profilSearch);
 
+        haha.setVisibility(View.INVISIBLE);
 
         flag = (ImageView) itemView.findViewById(R.id.flag);
 
         // Capture position and set results to the TextViews
-        nama.setText(resultp.get(SearchResultActivity.NAMA));
-        nim.setText("No = " + resultp.get(SearchResultActivity.NIM));
-        unit.setText(resultp.get(SearchResultActivity.UNIT));
-        aidi.setText(resultp.get(SearchResultActivity.AIDI));
-        lat.setText(resultp.get("la"));
-        lon.setText(resultp.get("lo"));
-        // Capture position and set results to the ImageView
+        aidi.setText(resultp.get("id"));
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        imageLoader.displayImage(resultp.get(SearchResultActivity.GAMBAR), flag, options, animateFirstListener);
+        imageLoader.displayImage(resultp.get("foto"), flag, options, animateFirstListener);
 
-        profil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        nama.setText(resultp.get("nama"));
+        nim.setText("No = " + resultp.get("no"));
+        unit.setText(resultp.get("unit"));
+        status.setText(resultp.get("status"));
 
-                Intent intent = new Intent(context, ProfilLengkap.class);
-                Bundle search = new Bundle();
-                search.putString("nama", resultp.get(SearchResultActivity.NAMA));
-                intent.putExtras(search);
-                context.startActivity(intent);
+        //unit.setVisibility(View.VISIBLE);
+        //status.setVisibility(View.VISIBLE);
 
-            }
 
-        });
+        // Capture position and set results to the ImageView
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent();
-                intent.putExtra("nama",resultp.get(SearchResultActivity.NAMA));
-                intent.putExtra("lat",resultp.get("la"));
-                intent.putExtra("lon",resultp.get("lo"));
-                SearchResultActivity.searchresult.setResult(Activity.RESULT_OK, intent);
-                SearchResultActivity.searchresult.finish();
-            }
-        });
+//        itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent();
+//                intent.putExtra("nama",resultp.get(SearchResultActivity.NAMA));
+//                intent.putExtra("lat",resultp.get("la"));
+//                intent.putExtra("lon",resultp.get("lo"));
+//                SearchResultActivity.searchresult.setResult(Activity.RESULT_OK, intent);
+//                SearchResultActivity.searchresult.finish();
+//            }
+//        });
 
         // Capture ListView item click
 //        itemView.setOnClickListener(new View.OnClickListener() {
