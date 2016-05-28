@@ -1,14 +1,12 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -26,47 +24,29 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SearchResultActivity extends AppCompatActivity {
-
-    String keywords;
-    ProgressBar haha;
+public class TrackingAktif extends AppCompatActivity {
 
     ListView listview;
-    ListSearchAdapter adapter = null;
+    ListTrekingAdapter adapter = null;
     ArrayList<HashMap<String, String>> arraylist;
 
-    public static String NAMA = "nama";
-    public static String NIM = "no";
-    public static String UNIT = "unit";
-    public static String GAMBAR = "foto";
-    public static String AIDI = "id";
+    ProfilDAO mProfilDAO;
 
     Boolean internet_error = false;
-
-    public static Activity searchresult;
-
-    ProfilDAO mProfilDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
+        setContentView(R.layout.tracking_aktif);
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
 
-        searchresult = this;
-
-        Intent i = getIntent();
-        keywords = i.getExtras().getString("keywords");
-        //Toast.makeText(getApplicationContext(), keywords, Toast.LENGTH_SHORT).show();
-
-        haha = (ProgressBar) findViewById(R.id.progress_search);
-        listview = (ListView) findViewById(R.id.listViewSearch);
+        listview = (ListView) findViewById(R.id.listViewtracking);
 
         NetworkUtils utils = new NetworkUtils(getApplicationContext());
         if(utils.isConnectingToInternet()) {
 
-                new DownloadJSON().execute();
+            new DownloadJSON().execute();
 
         }
         else {
@@ -99,7 +79,7 @@ public class SearchResultActivity extends AppCompatActivity {
             if(!internet_error) {
 
                 DefaultHttpClient httpClient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/cari.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&keyword=" + keywords);
+                HttpGet httpGet = new HttpGet("http://patpatstudio.com/staftrek/trekingaktif.php?jabatan=" + mProfilDAO.getTopProfil().getJabatan_profil() + "&idp=" + String.valueOf(mProfilDAO.getTopProfil().getIdprofil()) );
                 try {
                     HttpResponse httpResponse = httpClient.execute(httpGet);
                     HttpEntity httpEntity = httpResponse.getEntity();
@@ -129,19 +109,18 @@ public class SearchResultActivity extends AppCompatActivity {
                 try {
                     // Locate the array name in JSON
                     JSONObject jsonObject = new JSONObject(serverData);
-                    JSONArray jsonarray = jsonObject.getJSONArray("cari");
+                    JSONArray jsonarray = jsonObject.getJSONArray("treking");
 
                     for (int i = 0; i < jsonarray.length(); i++) {
                         HashMap<String, String> map = new HashMap<String, String>();
                         JSONObject jsonObjectBahan = jsonarray.getJSONObject(i);
                         // Retrive JSON Objects
-                        map.put(AIDI, jsonObjectBahan.getString(AIDI));
-                        map.put(NAMA, jsonObjectBahan.getString(NAMA));
-                        map.put(NIM, jsonObjectBahan.getString(NIM));
-                        map.put(GAMBAR, jsonObjectBahan.getString(GAMBAR));
-                        map.put("la", jsonObjectBahan.getString("la"));
-                        map.put("lo", jsonObjectBahan.getString("lo"));
-                        map.put(UNIT, jsonObjectBahan.getString(UNIT));
+                        map.put("id", jsonObjectBahan.getString("id"));
+                        map.put("foto", jsonObjectBahan.getString("foto"));
+                        map.put("nama", jsonObjectBahan.getString("nama"));
+                        map.put("no", jsonObjectBahan.getString("no"));
+                        map.put("unit", jsonObjectBahan.getString("unit"));
+                        map.put("status", jsonObjectBahan.getString("status"));
                         // Set the JSON Objects into the array
                         arraylist.add(map);
                     }
@@ -166,7 +145,6 @@ public class SearchResultActivity extends AppCompatActivity {
             internet_error = true;
             super.onCancelled();
             //progressDialog.dismiss();
-            haha.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "Internet connection error", Toast.LENGTH_SHORT).show();
         }
 
@@ -177,21 +155,19 @@ public class SearchResultActivity extends AppCompatActivity {
             if(internet_error) {
 
                 //progressDialog.dismiss();
-                haha.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Internet connection error", Toast.LENGTH_SHORT).show();
 
             }
             else {
 
-                adapter = new ListSearchAdapter(SearchResultActivity.this, arraylist);
+                adapter = new ListTrekingAdapter(TrackingAktif.this, arraylist);
                 // Set the adapter to the ListView
                 listview.setAdapter(adapter);
                 // Close the progress dialog
-                //progressDialog.dismiss();
-                haha.setVisibility(View.GONE);
 
             }
 
         }
     }
+
 }

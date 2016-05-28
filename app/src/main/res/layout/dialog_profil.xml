@@ -4,96 +4,19 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/lay"
-        android:padding="@dimen/activity_horizontal_margin"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/foto_profil"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/profil"
-        android:layout_alignBottom="@+id/layot"
-        android:layout_alignTop="@+id/layot" />
+        android:layout_height="150dp"
+        android:id="@+id/listViewlay"/>
 
-    <RelativeLayout
-        android:id="@+id/layot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        android:layout_toEndOf="@+id/foto_profil"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/aidi_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ID"
-            android:visibility="invisible"/>
-
-        <TextView
-            android:id="@+id/name_dialog"
-            android:layout_alignParentTop="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nama"/>
-
-        <TextView
-            android:id="@+id/jabatan"
-            android:layout_below="@+id/name_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jabatan"/>
-
-        <TextView
-            android:id="@+id/nmr_induk"
-            android:layout_below="@id/jabatan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NIP"/>
-
-        <TextView
-            android:id="@+id/unit_dialog"
-            android:layout_below="@id/nmr_induk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unit"/>
-
-        <TextView
-            android:id="@+id/nmr_telp"
-            android:layout_below="@id/unit_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No. HP"/>
-
-        <TextView
-            android:id="@+id/imel"
-            android:layout_below="@id/nmr_telp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E-mail"/>
-
-        <TextView
-            android:id="@+id/alamat_dialog"
-            android:layout_below="@id/imel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Alamat"/>
-    </RelativeLayout>
-    </RelativeLayout>
-
-    <Button
+      <Button
         android:id="@+id/appointment"
         android:text="Buat Janji"
         android:drawableRight="@android:drawable/arrow_down_float"
         android:layout_width="match_parent"
         android:onClick="expandableButton1"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lay"/>
+        android:layout_below="@+id/listViewlay"/>
 
     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
         android:id="@+id/expandableLayout1"

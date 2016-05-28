@@ -1,6 +1,7 @@
 package com.pandu.patpat.android.staftrack;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -16,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -74,6 +76,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     EditText Search;
 
+    public static Activity mapActivity;
+
+    ImageView track;
+
     Timer t;
 
     @Override
@@ -84,6 +90,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mapActivity = this;
+
+        track = (ImageView) findViewById(R.id.track_btn);
+
+        track.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, TrackingAktif.class);
+                //Bundle search = new Bundle();
+                //search.putString("keywords", Search.getText().toString());
+                //intent.putExtras(search);
+                startActivityForResult(intent, 1);
+            }
+        });
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
         mLoginDAO = new LoginDAO(getApplicationContext());
@@ -117,7 +138,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         Bundle search = new Bundle();
                         search.putString("keywords", Search.getText().toString());
                         intent.putExtras(search);
-                        startActivity(intent);
+                        startActivityForResult(intent, 1);
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Tidak boleh kosong", Toast.LENGTH_SHORT).show();
@@ -165,16 +186,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if(marker.getTitle().equals("My Location"))
-                {
 
-                }
-                return false;
-            }
-        });
 
         seting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,6 +326,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             saveLokasi(mProfilDAO.getTopProfil().getJabatan_profil(), String.valueOf(mProfilDAO.getTopProfil().getIdprofil()), String.valueOf(mLastLocation.getLatitude()), String.valueOf(mLastLocation.getLongitude()));
 
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if(!marker.getTitle().equals("My Location"))
+                    {
+                        Intent intent = new Intent(MapActivity.this, ContactActivity.class);
+                        Bundle search = new Bundle();
+                        search.putString("nama", marker.getTitle());
+                        intent.putExtras(search);
+                        startActivity(intent);
+                    }
+                    return false;
+                }
+            });
+
 //            t = new Timer();
 //            t.schedule(new TimerTask() {
 //
@@ -375,6 +402,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onConnectionSuspended(int arg0) {
         Toast.makeText(this, "Connection suspended...", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                String nama = data.getStringExtra("nama");
+                double lat = Double.parseDouble(data.getStringExtra("lat"));
+                double lon = Double.parseDouble(data.getStringExtra("lon"));
+                LatLng myLoc = new LatLng(lat, lon);
+                mMap.addMarker(new MarkerOptions().position(myLoc).title(nama));
+            }
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {

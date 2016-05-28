@@ -18,7 +18,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
         android:orientation="vertical"
-        android:layout_alignBottom="@+id/buton">
+        android:layout_alignBottom="@+id/buton"
+        android:id="@+id/relativeLayout2">
         <TextView
             android:id="@+id/nama_search"
             android:layout_width="wrap_content"
@@ -78,5 +79,25 @@
         android:id="@+id/profilSearch"
         android:layout_below="@+id/button" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/latSearch"
+        android:layout_below="@+id/relativeLayout2"
+        android:visibility="gone"
+        android:layout_toEndOf="@+id/flag" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/lonSearch"
+        android:visibility="gone"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_toEndOf="@+id/flag" />
 
 </RelativeLayout>
