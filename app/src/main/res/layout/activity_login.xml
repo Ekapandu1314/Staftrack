@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="#80DEEA"
     android:orientation="vertical"
     tools:context="com.pandu.patpat.android.staftrack.LoginActivity">
 
@@ -38,14 +39,15 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="190dp"
+                android:src="@drawable/Logogm"
                 android:contentDescription="@string/copyright"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/Dark">
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -60,7 +62,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/Dark">
 
                 <EditText
                     android:id="@+id/password"
@@ -77,7 +80,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Spinner
-                android:layout_width="108dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner_jabatan"
                 android:layout_gravity="center_horizontal"
@@ -90,6 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_custom_rec"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 

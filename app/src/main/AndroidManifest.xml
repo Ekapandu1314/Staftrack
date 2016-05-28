@@ -58,7 +58,8 @@
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
