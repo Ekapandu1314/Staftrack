@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/foto_trekking"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/profil"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/relativeLayout" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@+id/foto_trekking"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:id="@+id/relativeLayout">
+        <TextView
+            android:id="@+id/aidi_trekking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/name_trekking"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"/>
+
+        <TextView
+            android:id="@+id/no_trekking"
+            android:layout_below="@+id/status_trekking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Jabatan"/>
+
+        <TextView
+            android:id="@+id/unit_trekking"
+            android:layout_below="@id/name_trekking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIP"/>
+
+        <TextView
+            android:id="@+id/status_trekking"
+            android:layout_below="@id/unit_trekking"
+            android:layout_width="wrap_content"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="Unit"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

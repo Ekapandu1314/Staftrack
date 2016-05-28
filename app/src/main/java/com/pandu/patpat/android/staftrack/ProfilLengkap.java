@@ -62,7 +62,7 @@ public class ProfilLengkap extends AppCompatActivity {
 
         }
 
-        Toast.makeText(getApplicationContext(), nama_text, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), nama_text, Toast.LENGTH_SHORT).show();
 
         mProfilDAO = new ProfilDAO(getApplicationContext());
 

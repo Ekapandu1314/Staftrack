@@ -153,7 +153,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         final ProfilDAO mProfilDAO = new ProfilDAO(getApplicationContext());
 
-        Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilCount()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mProfilDAO.getProfilCount()), Toast.LENGTH_SHORT).show();
 
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
@@ -314,8 +314,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 mGoogleApiClient);
 
         if (mLastLocation != null) {
-            Toast.makeText(getApplicationContext(), "Latitude: "+ String.valueOf(mLastLocation.getLatitude())+"Longitude: "+
-                    String.valueOf(mLastLocation.getLongitude()), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Latitude: "+ String.valueOf(mLastLocation.getLatitude())+"Longitude: "+
+//                    String.valueOf(mLastLocation.getLongitude()), Toast.LENGTH_SHORT).show();
             LatLng myLoc = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             mMap.addMarker(new MarkerOptions().position(myLoc).title("My Location"));
             CameraUpdate center=

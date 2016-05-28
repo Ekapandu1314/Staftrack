@@ -343,7 +343,7 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                Toast.makeText(getBaseContext(), "http://patpatstudio.com/staftrek/tambahtrek.php?jabatan=" + jabatan + "&idp=" + id_saya + "&idd=" + id_orang + "&keperluan=" + keperluan, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "http://patpatstudio.com/staftrek/tambahtrek.php?jabatan=" + jabatan + "&idp=" + id_saya + "&idd=" + id_orang + "&keperluan=" + keperluan, Toast.LENGTH_SHORT).show();
             }
 
             @Override

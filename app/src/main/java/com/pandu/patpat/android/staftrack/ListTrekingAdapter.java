@@ -86,20 +86,17 @@ public class ListTrekingAdapter extends BaseAdapter {
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View itemView = inflater.inflate(R.layout.list_item_search, parent, false);
+        View itemView = inflater.inflate(R.layout.list_item_trekking, parent, false);
         // Get the position
         resultp = data.get(position);
 
-        nama = (TextView) itemView.findViewById(R.id.nama_search);
-        nim = (TextView) itemView.findViewById(R.id.latSearch);
-        unit = (TextView) itemView.findViewById(R.id.unit_search);
-        aidi = (TextView) itemView.findViewById(R.id.aidi);
-        status = (TextView) itemView.findViewById(R.id.country);
-        haha = (Button) itemView.findViewById(R.id.profilSearch);
+        nama = (TextView) itemView.findViewById(R.id.name_trekking);
+        nim = (TextView) itemView.findViewById(R.id.no_trekking);
+        unit = (TextView) itemView.findViewById(R.id.unit_trekking);
+        aidi = (TextView) itemView.findViewById(R.id.aidi_trekking);
+        status = (TextView) itemView.findViewById(R.id.status_trekking);
 
-        haha.setVisibility(View.INVISIBLE);
-
-        flag = (ImageView) itemView.findViewById(R.id.flag);
+        flag = (ImageView) itemView.findViewById(R.id.foto_trekking);
 
         // Capture position and set results to the TextViews
         aidi.setText(resultp.get("id"));
